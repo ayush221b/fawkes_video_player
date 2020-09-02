@@ -147,8 +147,13 @@ class _FawkesVideoPlayerState extends State<FawkesVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return FawkesVideoPlayerWithControls(
-      fawkesController: _controller,
-    );
+    return (_controller.flutterVideoPlayerController == null ||
+                !_controller.flutterVideoPlayerController.value.initialized) &&
+            _controller.showPlaceholder &&
+            !_controller.isLoading
+        ? _controller.placeholderWidget
+        : FawkesVideoPlayerWithControls(
+            fawkesController: _controller,
+          );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:io';
 
+import 'package:fawkes_video_player/errors/controller_exception.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:video_player/video_player.dart';
@@ -120,6 +121,12 @@ class FawkesController extends ChangeNotifier {
   /// This callback will fire when fullscreen has been disabled
   final VoidCallback onFullScreenDisabled;
 
+  /// The placeholder widget
+  final Widget placeholderWidget;
+
+  /// Whether to show the placeholder at start
+  final bool showPlaceholder;
+
   // Whether the controller is busy doing some work
   // and the loadingwidget should be displayed
   bool _isLoading = false;
@@ -137,6 +144,8 @@ class FawkesController extends ChangeNotifier {
       this.startOnMute = false,
       this.startPosition,
       this.systemOverlaysAfterFullScreen,
+      this.showPlaceholder = false,
+      this.placeholderWidget,
       this.deviceOrientationsAfterFullScreen = const [
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
@@ -153,6 +162,12 @@ class FawkesController extends ChangeNotifier {
     assert(startOnMute != null, 'Boolean value cannot be null');
     assert(loopVideo != null, 'Boolean value cannot be null');
     assert(autoInitialize != null, 'Boolean value cannot be null');
+    assert(showPlaceholder != null, 'Boolean value cannot be null');
+    if (showPlaceholder && placeholderWidget == null) {
+      throw FawkesControllerException(
+          message:
+              'Placeholder widget was not provided, but showPlaceholder is set to true');
+    }
     _wrapperProperties = FawkesWrapperProperties();
     _seekOptions = FawkesSeekOptions(
         backwardSeekDuration: Duration(seconds: 10),
@@ -161,7 +176,7 @@ class FawkesController extends ChangeNotifier {
     _playerTheme = FawkesPlayerTheme();
     _subtitleOptions = FawkesSubtitleOptions();
     if (autoInitialize) {
-      initialize();
+      if (!showPlaceholder) initialize();
     }
   }
 
@@ -237,6 +252,11 @@ class FawkesController extends ChangeNotifier {
     if (properties == null) return;
     _wrapperProperties = properties;
     notifyListeners();
+  }
+
+  /// Switch from placeholder
+  void switchFromPlaceholder() {
+    initialize();
   }
 
   /// Set the seek options for the video player
