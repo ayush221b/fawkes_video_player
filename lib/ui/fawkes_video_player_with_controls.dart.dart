@@ -214,8 +214,8 @@ class _FawkesVideoPlayerWithControlsState
                           FawkesControlButton(
                               onTap: _handleVolumeActionTap,
                               svgPath: _controller.isMuted
-                                  ? 'assets/icons/muted.svg'
-                                  : 'assets/icons/unmuted.svg',
+                                  ? 'lib/assets/icons/muted.svg'
+                                  : 'lib/assets/icons/unmuted.svg',
                               size: 20,
                               color: Colors.white),
                           SizedBox(

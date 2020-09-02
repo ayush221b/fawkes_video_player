@@ -39,7 +39,7 @@ class FawkesCentralControls extends StatelessWidget {
             onTap: seekBackward,
             size: 40,
             color: Colors.white,
-            svgPath: 'assets/icons/10_reverse.svg',
+            svgPath: 'lib/assets/icons/10_reverse.svg',
           ),
           SizedBox(
             width: 40,
@@ -47,8 +47,8 @@ class FawkesCentralControls extends StatelessWidget {
           FawkesControlButton(
               onTap: controller.togglePause,
               svgPath: controller.isPlaying
-                  ? 'assets/icons/pause.svg'
-                  : 'assets/icons/play.svg',
+                  ? 'lib/assets/icons/pause.svg'
+                  : 'lib/assets/icons/play.svg',
               size: 68,
               color: Colors.white),
           SizedBox(
@@ -58,7 +58,7 @@ class FawkesCentralControls extends StatelessWidget {
             onTap: seekForward,
             size: 40,
             color: Colors.white,
-            svgPath: 'assets/icons/10_forward.svg',
+            svgPath: 'lib/assets/icons/10_forward.svg',
           ),
         ],
       ),
